@@ -2,6 +2,7 @@ const router = require('express').Router();
 const User = require('../models/userModel');
 
 module.exports.getUsers = (req, res) => {
+  console.log('Get users');
   User.find({})
     .then((users) => res.send({data: users}))
     .catch((err) => {
@@ -15,4 +16,10 @@ module.exports.getUserById = (req, res) => {
     .catch((err) => {
       console.log(err);
     })
+}
+
+module.exports.createUser = (req, res)=>{
+  const {name, about, avatar} = req.body;
+  User.create({name, about, avatar}).then(user=> res.send({data:user}))
+    .catch(err=> console.log(err));
 }

@@ -1,8 +1,6 @@
-const router = require('express').Router();
 const User = require('../models/userModel');
 
 module.exports.getUsers = (req, res) => {
-  console.log('Get users');
   User.find({})
     .then((users) => res.send({data: users}))
     .catch((err) => {

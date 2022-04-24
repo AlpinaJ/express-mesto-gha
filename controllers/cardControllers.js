@@ -10,6 +10,7 @@ module.exports.getCards = (req, res) => {
 
 module.exports.createCard = (req, res) => {
   const {name, link} = req.body;
+  console.log(name, link);
   Card.create({name, link, owner: req.user._id}).then(card => res.send({
     name: card.name,
     link: card.link,
@@ -21,9 +22,7 @@ module.exports.createCard = (req, res) => {
 }
 
 module.exports.deleteCard = (req, res) => {
-  console.log("delete");
   Card.findById(req.params.cardId).then((card) => {
-    console.log(card.owner.toString(), req.user._id);
     if (card.owner.toString() === req.user._id) {
       Card.findByIdAndDelete(req.params.cardId).then((card) => res.send({
         name: card.name,
@@ -38,4 +37,16 @@ module.exports.deleteCard = (req, res) => {
   }).catch((err) => {
     console.log(err);
   })
+}
+
+module.exports.likeCard = (req, res)=>{
+  Card.findByIdAndUpdate(req.params.cardId, {$addToSet: { likes: req.user._id }}).then((card)=>{
+    res.send({data:card});
+  }).catch((err)=> console.log(err));
+}
+
+module.exports.unlikeCard = (req, res)=>{
+  Card.findByIdAndUpdate(req.params.cardId, {$pull: { likes: req.user._id }}).then((card)=>{
+    res.send({data:card});
+  }).catch((err)=> console.log(err));
 }

@@ -6,4 +6,4 @@ class DefaultError extends Error {
   }
 }
 
-module.exports = {DefaultError};
+module.exports = { DefaultError };

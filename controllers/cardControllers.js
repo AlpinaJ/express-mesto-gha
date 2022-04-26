@@ -45,7 +45,14 @@ module.exports.deleteCard = (req, res) => {
         _id: card._id,
       }));
     }
-  });
+  })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        res.status(ValidationErrorCode).send({message: "Переданы некорректные данные удаления карточки"});
+      } else {
+        res.status(DefaultErrorCode).send({message: "Ошибка по умолчанию"});
+      }
+    });
 };
 
 module.exports.likeCard = (req, res) => {

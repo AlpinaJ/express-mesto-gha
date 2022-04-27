@@ -33,7 +33,7 @@ module.exports.createCard = (req, res) => {
 module.exports.deleteCard = (req, res) => {
   Card.findById(req.params.cardId)
     .orFail(() => {
-      res.status(ValidationErrorCode).send({"message": "Карточка с указанным _id не найдена"});
+      res.status(ErrorNotFoundCode).send({"message": "Карточка с указанным _id не найдена"});
     })
     .then((card) => {
     if (card.owner.toString() === req.user._id) {

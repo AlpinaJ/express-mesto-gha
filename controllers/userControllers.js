@@ -5,6 +5,7 @@ const User = require("../models/userModel");
 const { ErrorNotFound } = require("../errors/ErrorNotFound");
 const { ValidationError } = require("../errors/ValidationError");
 const { UnauthorizedError } = require("../errors/UnauthorizedError");
+const { ConflictError } = require("../errors/ConflictError");
 
 module.exports.getUsers = (req, res) => {
   User.find({})
@@ -50,7 +51,7 @@ module.exports.createUser = (req, res, next) => {
     }))
       .catch((err) => {
         if (err.code === 11000) {
-          next(new UnauthorizedError("Пользователь с таким EMAIL уже зарегистрирован"));
+          next(new ConflictError("Пользователь с таким EMAIL уже зарегистрирован"));
         } else if (err.name === "ValidationError") {
           next(new ValidationError("Переданы некорректные данные при создании пользователя"));
         } else {

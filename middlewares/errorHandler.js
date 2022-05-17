@@ -5,13 +5,14 @@
 // const ForbiddenErrorCode = 403;
 // const ConflictErrorCode = 409;
 
-function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res) {
   const { statusCode = 500, message } = err;
 
-  res.status(statusCode).send({ message: statusCode === 500
-      ? `На сервере произошла ошибка`
-        : message,
-    });
+  res.status(statusCode).send({
+    message: statusCode === 500
+      ? "На сервере произошла ошибка"
+      : message,
+  });
 }
 
 module.exports = { errorHandler };

@@ -13,6 +13,7 @@ function errorHandler(err, req, res, next) {
       ? "На сервере произошла ошибка"
       : message,
   });
+  next();
 }
 
 module.exports = { errorHandler };

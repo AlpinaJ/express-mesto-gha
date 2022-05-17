@@ -5,7 +5,7 @@
 // const ForbiddenErrorCode = 403;
 // const ConflictErrorCode = 409;
 
-function errorHandler(err, req, res) {
+function errorHandler(err, req, res, next) {
   const { statusCode = 500, message } = err;
 
   res.status(statusCode).send({

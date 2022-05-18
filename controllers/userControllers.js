@@ -7,9 +7,9 @@ const { ValidationError } = require("../errors/ValidationError");
 const { UnauthorizedError } = require("../errors/UnauthorizedError");
 const { ConflictError } = require("../errors/ConflictError");
 
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((users) => res.send({ data: users }));
+    .then((users) => res.send({ data: users })).catch(next);
 };
 
 module.exports.getUserById = (req, res, next) => {
@@ -58,7 +58,7 @@ module.exports.createUser = (req, res, next) => {
           next(err);
         }
       });
-  });
+  }).catch(next);
 };
 
 module.exports.updateProfile = (req, res, next) => {

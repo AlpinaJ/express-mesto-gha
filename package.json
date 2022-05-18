@@ -6,9 +6,9 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.1",
+    "cookie-parser": "^1.4.6",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
-    "localStorage": "^1.0.4",
     "mongoose": "^6.2.10",
     "validator": "^13.7.0",
     "window": "^4.2.7"
@@ -18,24 +18,7 @@
     "dev": "nodemon app.js",
     "lint": "npx eslint ."
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+
   "devDependencies": {
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",

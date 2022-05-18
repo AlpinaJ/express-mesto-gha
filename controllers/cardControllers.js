@@ -41,12 +41,12 @@ module.exports.deleteCard = (req, res, next) => {
             likes: card.likes,
             _id: card._id,
           }));
-        } else {
-          next(new ForbiddenError("Вы не можете удалить чужую карточку"));
         }
+        next(new ForbiddenError("Вы не можете удалить чужую карточку"));
       } else {
         next(new ErrorNotFound("Карточка с указанным _id не найдена"));
       }
+      return card;
     })
     .catch((err) => {
       if (err.name === "CastError") {

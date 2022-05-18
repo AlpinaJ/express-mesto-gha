@@ -12,7 +12,7 @@ const auth = require("./middlewares/auth");
 const { login, createUser } = require("./controllers/userControllers");
 const { errorHandler } = require("./middlewares/errorHandler");
 
-const { ErrorNotFound } = require("../errors/ErrorNotFound");
+const { ErrorNotFound } = require("./errors/ErrorNotFound");
 
 const { PORT = 3000 } = process.env;
 mongoose.connect("mongodb://localhost:27017/mestodb");
@@ -42,7 +42,7 @@ app.post("/signup", celebrate({
 app.use(auth);
 app.use("/users", userRoutes);
 app.use("/cards", cardRoutes);
-app.use((req, res, next) => next(new ErrorNotFound('Страница не найдена')));
+app.use((req, res, next) => next(new ErrorNotFound("Страница не найдена")));
 app.use(errors());
 app.use(errorHandler);
 

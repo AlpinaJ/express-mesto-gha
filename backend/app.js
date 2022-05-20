@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 
 const { celebrate, Joi, errors } = require("celebrate");
 
+const cors = require('cors');
+
 const userRoutes = require("./routers/userRouter");
 const cardRoutes = require("./routers/cardRouter");
 const auth = require("./middlewares/auth");
@@ -15,12 +17,18 @@ const { errorHandler } = require("./middlewares/errorHandler");
 const { ErrorNotFound } = require("./errors/ErrorNotFound");
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+const corsOptions = {
+  origin: ['https://mesto-julia.nomoredomains.xyz', 'http://localhost:3000','http://mesto-julia.nomoredomains.xyz', 'https://localhost:3000'],
+  credentials: true,
+};
+
 const { PORT = 3000 } = process.env;
 mongoose.connect("mongodb://localhost:27017/mestodb");
 const app = express();
 
 app.use(express.json());
 
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(requestLogger);
 app.post("/signin", celebrate({

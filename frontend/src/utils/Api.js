@@ -100,7 +100,7 @@ class Api {
     }
 }
 
-const api = new Api('https://mesto.nomoreparties.co/v1/cohort-35',
+const api = new Api('http://api.mesto-julia.nomoredomains.xyz',
     {
         authorization: 'ed992258-c9b2-4aaa-a5d2-85fccb4ac919',
         'Content-Type': 'application/json'

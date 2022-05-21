@@ -74,8 +74,8 @@ app.post('/signout', logout);
 app.use(auth);
 app.use("/users", userRoutes);
 app.use("/cards", cardRoutes);
+
 app.use((req, res, next) => {
-  console.log("here error", req.protocol + '://' + req.get('host') + req.originalUrl, res);
   next(new ErrorNotFound("Страница не найдена"))
 });
 app.use(errorLogger);

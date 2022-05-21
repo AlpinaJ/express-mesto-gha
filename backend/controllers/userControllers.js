@@ -121,8 +121,8 @@ module.exports.login = (req, res, next) => {
     });
 };
 
-function logout(req, res, next) {
-  res.clearCookie(JWT_KEY, JWT_OPTIONS);
+module.exports.logout = (req, res, next) =>{
+  res.clearCookie("jwt", { expiresIn: "7d" });
   res.end();
 }
 

@@ -82,58 +82,38 @@ function App() {
         })
     }
 
-    useEffect(() => {
-        getContent();
-    }, [loggedIn]);
+    // useEffect(() => {
+    //     getContent();
+    // }, [loggedIn]);
 
-    useEffect(() => {
-        if (!loggedIn) {
-            return
-        }
-        console.log("useEffect");
-        // api.getInitialCards()
-        //     .then(
-        //         (data) => {
-        //             console.log(data);
-        //             setCards(data.data);
-        //         }
-        //     )
-        //     .catch(err => console.log(err))
 
-        api.getUserInfo()
-            .then(
-                (userInfo) => {
-                    console.log("user",userInfo);
-                    setCurrentUser(userInfo.data);
-                }
-            )
-            .catch(err => console.log(err))
-    }, [loggedIn])
 
     function handleLoggedIn() {
         setLoggedIn(true);
-        history('/users/me');
+        history('/ura');
     }
 
     function handleLoggedOut() {
-        history('/signin');
         setLoggedIn(false);
+        api.signout().then(()=>{
+            history('/signin');
+        }).catch((err)=> console.log(err));
     }
 
-    function getContent() {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjg4YmUyMDk1M2I1ZjE4MGRhZWIwZWQiLCJpYXQiOjE2NTMxMjg3NDIsImV4cCI6MTY1MzczMzU0Mn0.v_yN5aeJ-AZqywPr-y67Y-Satqo0NCTh-BYcGdIbpLI";
-        console.log(token);
-        if (token) {
-            auth.getMain(token).then((res) => {
-                setLoggedIn(true);
-                history('/users/me');
-                setEmail(res.data.email);
-            })
-        }
-    }
+    // function getContent() {
+    //     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjg4YmUyMDk1M2I1ZjE4MGRhZWIwZWQiLCJpYXQiOjE2NTMxMjg3NDIsImV4cCI6MTY1MzczMzU0Mn0.v_yN5aeJ-AZqywPr-y67Y-Satqo0NCTh-BYcGdIbpLI";
+    //     console.log(token);
+    //     if (token) {
+    //         auth.getMain(token).then((res) => {
+    //             setLoggedIn(true);
+    //             history('/users/me');
+    //             setEmail(res.data.email);
+    //         })
+    //     }
+    // }
 
     function handleRegister(email,password) {
-        return auth.register(email, password).then((res) => {
+        return api.signup(email, password).then((res) => {
             if (res.data) {
                 setStatus(true);
                 setInfoTooltipOpen(true);
@@ -150,7 +130,7 @@ function App() {
 
     function handleLogin(email, password) {
         console.log("handleLogin", email, password);
-        return auth.authorize(email, password).then((res)=>{
+        return auth.signin(email, password).then((res)=>{
             if (res['message']==='success'){
                 handleLoggedIn();
             }
@@ -170,19 +150,19 @@ function App() {
         }
     }
 
-    // useEffect(() => {
-    //     console.log("another useEffect")
-    //     if (loggedIn) {
-    //         Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([user, c]) => {
-    //             console.log(user);
-    //             setCurrentUser(user);
-    //             setCards(c);
-    //             console.log(currentUser, user);
-    //         }).catch(err => {
-    //             console.log(err);
-    //         });
-    //     }
-    // }, [loggedIn]);
+    useEffect(() => {
+        console.log("another useEffect")
+        if (loggedIn) {
+            Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([user, c]) => {
+                console.log(user);
+                setCurrentUser(user);
+                setCards(c);
+                console.log(currentUser, user);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [loggedIn]);
 
 
     useEffect(() => {
@@ -206,16 +186,16 @@ function App() {
                     <Route exact path="/" element=
                         {loggedIn ? <Navigate to="/signup"/> : <Navigate to="/signin"/>}
                     />
-                    <Route path="/users/me" element={<ProtectedRoute isLoggedIn={loggedIn}><MainPage
-                        currentUser={currentUser}
-                        handleAddPlaceClick={handleAddPlaceClick}
-                        handleCardClick={handleCardClick}
-                        handleCardDelete={handleCardDelete}
-                        handleCardLike={handleCardLike}
-                        handleEditAvatarClick={handleEditAvatarClick}
-                        handleEditProfileClick={handleEditProfileClick}
-                        mainCards={cards}
-                    /></ProtectedRoute>}/>
+                    {/*<Route path="/users/me" element={<ProtectedRoute isLoggedIn={loggedIn}><MainPage*/}
+                    {/*    currentUser={currentUser}*/}
+                    {/*    handleAddPlaceClick={handleAddPlaceClick}*/}
+                    {/*    handleCardClick={handleCardClick}*/}
+                    {/*    handleCardDelete={handleCardDelete}*/}
+                    {/*    handleCardLike={handleCardLike}*/}
+                    {/*    handleEditAvatarClick={handleEditAvatarClick}*/}
+                    {/*    handleEditProfileClick={handleEditProfileClick}*/}
+                    {/*    mainCards={cards}*/}
+                    {/*/></ProtectedRoute>}/>*/}
                 </Routes>
                 <Footer/>
                 <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}

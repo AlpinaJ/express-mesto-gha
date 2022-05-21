@@ -34,6 +34,7 @@ module.exports.createUser = (req, res, next) => {
     name, about, avatar, email, password,
   } = req.body;
 
+  console.log(email, password, name,about, avatar);
   if (!validator.isEmail(email)) {
     next(new ValidationError("Переданы некорректные данные"));
   }
@@ -62,6 +63,7 @@ module.exports.createUser = (req, res, next) => {
 };
 
 module.exports.updateProfile = (req, res, next) => {
+  console.log("update profile");
   const { name, about } = req.body;
   User.findByIdAndUpdate(
     req.user._id,

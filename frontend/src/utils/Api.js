@@ -108,33 +108,33 @@ class Api {
             .then((res) => this._handleResponse(res));
     }
 
-    // signup({email, password}) {
-    //     return fetch(`${this._url}/signup`, {
-    //         method: 'POST',
-    //         headers: this._headers,
-    //         body: JSON.stringify({email, password}),
-    //         credentials: 'include',
-    //     })
-    //         .then((res) => this._handleResponse(res));
-    // }
-    //
-    // signin({email, password}) {
-    //     return fetch(`${this._url}/signin`, {
-    //         method: 'POST',
-    //         headers: this._headers,
-    //         body: JSON.stringify({email, password}),
-    //         credentials: 'include',
-    //     })
-    //         .then((res) => this._handleResponse(res));
-    // }
-    //
-    // signout() {
-    //     return fetch(`${this._url}/signout`, {
-    //         method: 'POST',
-    //         credentials: 'include',
-    //     })
-    //         .then((res) => this._handleResponse(res));
-    // }
+    signup({email, password}) {
+        return fetch(`${this._url}/signup`, {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({email, password}),
+            credentials: 'include',
+        })
+            .then((res) => this._handleResponse(res));
+    }
+
+    signin({email, password}) {
+        return fetch(`${this._url}/signin`, {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({email, password}),
+            credentials: 'include',
+        })
+            .then((res) => this._handleResponse(res));
+    }
+
+    signout() {
+        return fetch(`${this._url}/signout`, {
+            method: 'POST',
+            credentials: 'include',
+        })
+            .then((res) => this._handleResponse(res));
+    }
 
 
 }

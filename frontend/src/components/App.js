@@ -81,25 +81,46 @@ function App() {
             console.log(err);
         })
     }
-    //
-    // useEffect(() => {
-    //     getContent();
-    // }, [loggedIn]);
+
+    useEffect(() => {
+        getContent();
+    }, [loggedIn]);
+
+    useEffect(() => {
+        if (!loggedIn) {
+            return
+        }
+        console.log("useEffect");
+        // api.getInitialCards()
+        //     .then(
+        //         (data) => {
+        //             console.log(data);
+        //             setCards(data.data);
+        //         }
+        //     )
+        //     .catch(err => console.log(err))
+
+        api.getUserInfo()
+            .then(
+                (userInfo) => {
+                    console.log("user",userInfo);
+                    setCurrentUser(userInfo.data);
+                }
+            )
+            .catch(err => console.log(err))
+    }, [loggedIn])
 
     function handleLoggedIn() {
         setLoggedIn(true);
-        history('/');
-        // localStorage.setItem('token',token);
+        history('/users/me');
     }
 
     function handleLoggedOut() {
-        // localStorage.removeItem('token');
         history('/signin');
         setLoggedIn(false);
     }
 
     function getContent() {
-        // const token = localStorage.getItem('token');
         const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjg4YmUyMDk1M2I1ZjE4MGRhZWIwZWQiLCJpYXQiOjE2NTMxMjg3NDIsImV4cCI6MTY1MzczMzU0Mn0.v_yN5aeJ-AZqywPr-y67Y-Satqo0NCTh-BYcGdIbpLI";
         console.log(token);
         if (token) {
@@ -130,10 +151,8 @@ function App() {
     function handleLogin(email, password) {
         console.log("handleLogin", email, password);
         return auth.authorize(email, password).then((res)=>{
-            res.token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjg4YmUyMDk1M2I1ZjE4MGRhZWIwZWQiLCJpYXQiOjE2NTMxMjg3NDIsImV4cCI6MTY1MzczMzU0Mn0.v_yN5aeJ-AZqywPr-y67Y-Satqo0NCTh-BYcGdIbpLI";
-            if (res.token){
-                console.log(res.token);
-                handleLoggedIn(res.token);
+            if (res['message']==='success'){
+                handleLoggedIn();
             }
             else{
                 setStatus(false);
@@ -151,16 +170,19 @@ function App() {
         }
     }
 
-    useEffect(() => {
-        if (loggedIn) {
-            Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([user, c]) => {
-                setCurrentUser(user);
-                setCards(c);
-            }).catch(err => {
-                console.log(err);
-            });
-        }
-    }, [loggedIn]);
+    // useEffect(() => {
+    //     console.log("another useEffect")
+    //     if (loggedIn) {
+    //         Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([user, c]) => {
+    //             console.log(user);
+    //             setCurrentUser(user);
+    //             setCards(c);
+    //             console.log(currentUser, user);
+    //         }).catch(err => {
+    //             console.log(err);
+    //         });
+    //     }
+    // }, [loggedIn]);
 
 
     useEffect(() => {

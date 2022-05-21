@@ -30,13 +30,9 @@ class Auth {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({email, password}),
-            // credentials: 'include',
+            credentials: 'include',
         }).then((res) => {
-            console.log(res);
             return res.json();
-        }).then((res)=>{
-            localStorage.setItem('token',res.token);
-            return res;
         }).catch((err) => console.log(err));
     }
 

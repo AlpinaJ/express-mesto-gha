@@ -16,8 +16,9 @@ class Api {
         return fetch(`${this._url}/users/me`, {
             headers: this._headers,
             credentials: 'include',
-        }).then((res) =>
-            this._handleResponse(res)
+        }).then((res) => {
+                this._handleResponse(res);
+            }
         );
     }
 

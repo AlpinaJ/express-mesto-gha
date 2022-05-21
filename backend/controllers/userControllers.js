@@ -98,10 +98,10 @@ module.exports.updateAvatar = (req, res, next) => {
 };
 
 module.exports.login = (req, res, next) => {
-  console.log("We are at login");
   const { email, password } = req.body;
   return User.findOne({ email }).select("+password")
     .then((user) => {
+      console.log("login", user);
       if (!user) {
         next(new UnauthorizedError("Неправильные почта или пароль"));
       } else {
@@ -128,6 +128,7 @@ module.exports.logout = (req, res, next) =>{
 }
 
 module.exports.getCurrentUser = (req, res, next) => {
+  console.log("getCurrentUser", req.user);
   User.findById(req.user._id).then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === "ValidationError") {

@@ -10,7 +10,7 @@ const cors = require('cors');
 
 const userRoutes = require("./routers/userRouter");
 const cardRoutes = require("./routers/cardRouter");
-const auth = require("./middlewares/auth");
+const {auth} = require("./middlewares/auth");
 const {login, createUser, logout} = require("./controllers/userControllers");
 const {errorHandler} = require("./middlewares/errorHandler");
 

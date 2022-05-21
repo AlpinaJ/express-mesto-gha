@@ -59,7 +59,7 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(requestLogger);
 
-
+console.log("smr");
 app.post("/signin", celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),

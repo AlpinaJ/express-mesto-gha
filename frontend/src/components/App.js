@@ -81,10 +81,10 @@ function App() {
             console.log(err);
         })
     }
-
-    useEffect(() => {
-        getContent();
-    }, [loggedIn]);
+    //
+    // useEffect(() => {
+    //     getContent();
+    // }, [loggedIn]);
 
     function handleLoggedIn() {
         setLoggedIn(true);
@@ -128,6 +128,7 @@ function App() {
     }
 
     function handleLogin(email, password) {
+        console.log("handleLogin", email, password);
         return auth.authorize(email, password).then((res)=>{
             res.token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjg4YmUyMDk1M2I1ZjE4MGRhZWIwZWQiLCJpYXQiOjE2NTMxMjg3NDIsImV4cCI6MTY1MzczMzU0Mn0.v_yN5aeJ-AZqywPr-y67Y-Satqo0NCTh-BYcGdIbpLI";
             if (res.token){
@@ -173,12 +174,16 @@ function App() {
         return () => document.removeEventListener('keydown', handleEscapeClose)
     });
 
-
     return (
         <div className="App">
             <div className="page">
                 <Header email={email} handleSignOut={handleLoggedOut}/>
                 <Routes>
+                    <Route path="/signup" element={<Register onRegister={handleRegister}/>}/>
+                    <Route path="/signin" element={<Login onLogin={handleLogin}/>}/>
+                    <Route exact path="/" element=
+                        {loggedIn ? <Navigate to="/signup"/> : <Navigate to="/signin"/>}
+                    />
                     <Route path="/users/me" element={<ProtectedRoute isLoggedIn={loggedIn}><MainPage
                         currentUser={currentUser}
                         handleAddPlaceClick={handleAddPlaceClick}
@@ -189,11 +194,6 @@ function App() {
                         handleEditProfileClick={handleEditProfileClick}
                         mainCards={cards}
                     /></ProtectedRoute>}/>
-                    <Route path="/signup" element={<Register onRegister={handleRegister}/>}/>
-                    <Route path="/signin" element={<Login onLogin={handleLogin}/>}/>
-                    <Route exact path="/" element=
-                        {loggedIn ? <Navigate to="/signup"/> : <Navigate to="/signin"/>}
-                    />
                 </Routes>
                 <Footer/>
                 <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}

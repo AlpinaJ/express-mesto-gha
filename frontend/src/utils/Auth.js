@@ -25,13 +25,14 @@ class Auth {
     }
 
     authorize(email, password) {
-        console.log("authorize", this._url, email, password);
+        console.log("authorize", this._url, email, password, this._headers);
         return fetch(`${this._url}signin`, {
             method: 'POST',
             headers: this._headers,
-            body: JSON.stringify({password, email}),
-            credentials: 'include',
+            body: JSON.stringify({email, password}),
+            // credentials: 'include',
         }).then((res) => {
+            console.log(res);
             return res.json();
         }).then((res)=>{
             localStorage.setItem('token',res.token);

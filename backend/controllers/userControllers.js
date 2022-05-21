@@ -30,12 +30,10 @@ module.exports.getUserById = (req, res, next) => {
     });
 };
 module.exports.createUser = (req, res, next) => {
-  console.log("createUser");
   const {
     name, about, avatar, email, password,
   } = req.body;
 
-  console.log(email, password, name, about, avatar);
   if (!validator.isEmail(email)) {
     next(new ValidationError("Переданы некорректные данные"));
   }

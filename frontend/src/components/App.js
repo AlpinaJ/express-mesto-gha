@@ -124,6 +124,8 @@ function App() {
                 setInfoTooltipOpen(true);
             }
         }).catch((err) => {
+            setStatus(false);
+            setInfoTooltipOpen(true);
             console.log(err);
         })
     }

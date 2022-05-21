@@ -40,6 +40,7 @@ class Auth {
     }
 
     getMain(token) {
+        console.log("getMain");
         return fetch(`${this._url}users/me`, {
             method: 'Get',
             headers: {
@@ -47,8 +48,9 @@ class Auth {
                 "Authorization": `Bearer ${token}`
             }
         }).then((res) => {
+            console.log("ok", res.json())
             return res.json();
-        }).catch((err) => console.log(err));
+        }).catch((err) => console.log("not ok", err));
     }
 }
 

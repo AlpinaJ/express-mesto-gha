@@ -108,7 +108,7 @@ module.exports.login = (req, res, next) => {
         bcrypt.compare(password, user.password).then((result) => {
           if (result) {
             const token = jwt.sign({ _id: user._id }, "some-secret-key", { expiresIn: "7d" });
-            res.cookie("jwt", token, { expiresIn: "7d" });
+            res.cookie("jwt", token, { expiresIn: "10s" });
             res.status(200).send({ message: "success" });
           } else {
             next(new UnauthorizedError("Неправильные почта или пароль"));
@@ -123,7 +123,7 @@ module.exports.login = (req, res, next) => {
 
 module.exports.logout = (req, res, next) =>{
   console.log("logout");
-  res.clearCookie("jwt", { expiresIn: "7d" });
+  res.clearCookie("jwt", { expiresIn: "10s" });
   res.end();
 }
 

@@ -2,10 +2,9 @@ const jwt = require("jsonwebtoken");
 
 const { UnauthorizedError } = require("../errors/UnauthorizedError");
 
-module.exports = (req, res, next) => {
+module.exports.auth= (req, res, next) => {
   const token = req.cookies.jwt;
   let payload;
-  console.log("try to auth  This goose", req.url);
 
   try {
     payload = jwt.verify(token, "some-secret-key");

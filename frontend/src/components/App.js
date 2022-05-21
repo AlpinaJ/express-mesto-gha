@@ -89,17 +89,19 @@ function App() {
     function handleLoggedIn(token) {
         setLoggedIn(true);
         console.log(token);
+        history('/signin')
         localStorage.setItem('token',token);
     }
 
     function handleLoggedOut() {
         localStorage.removeItem('token');
-        history('/signin');
+        history('/signout');
         setLoggedIn(false);
     }
 
     function getContent() {
-        const token = localStorage.getItem('token');
+        // const token = localStorage.getItem('token');
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjg4YmUyMDk1M2I1ZjE4MGRhZWIwZWQiLCJpYXQiOjE2NTMxMjg3NDIsImV4cCI6MTY1MzczMzU0Mn0.v_yN5aeJ-AZqywPr-y67Y-Satqo0NCTh-BYcGdIbpLI";
         console.log(token);
         if (token) {
             auth.getMain(token).then((res) => {
@@ -128,6 +130,7 @@ function App() {
 
     function handleLogin(email, password) {
         return auth.authorize(email, password).then((res)=>{
+            res.token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjg4YmUyMDk1M2I1ZjE4MGRhZWIwZWQiLCJpYXQiOjE2NTMxMjg3NDIsImV4cCI6MTY1MzczMzU0Mn0.v_yN5aeJ-AZqywPr-y67Y-Satqo0NCTh-BYcGdIbpLI";
             if (res.token){
                 console.log(res.token);
                 handleLoggedIn(res.token);

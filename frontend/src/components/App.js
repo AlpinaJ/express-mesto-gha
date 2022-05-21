@@ -90,7 +90,7 @@ function App() {
 
     function handleLoggedIn() {
         setLoggedIn(true);
-        history('/ura');
+        history('/users/me');
     }
 
     function handleLoggedOut() {
@@ -131,8 +131,7 @@ function App() {
     }
 
     function handleLogin(email, password) {
-        console.log("handleLogin", email, password);
-        return auth.signin({email, password}).then((res)=>{
+        return api.signin({email, password}).then((res)=>{
             if (res['message']==='success'){
                 handleLoggedIn();
             }

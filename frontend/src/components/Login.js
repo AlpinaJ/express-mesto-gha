@@ -9,7 +9,6 @@ function Login({onLogin}) {
     const history = useNavigate();
 
     function handleSubmit(e) {
-        console.log("We submit login");
         e.preventDefault();
         onLogin(email,password)
     }

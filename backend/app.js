@@ -71,7 +71,7 @@ app.post("/signup", celebrate({
 }), createUser);
 app.post('/signout', logout);
 
-app.use(auth);
+// app.use(auth);
 app.use("/users", userRoutes);
 app.use("/cards", cardRoutes);
 

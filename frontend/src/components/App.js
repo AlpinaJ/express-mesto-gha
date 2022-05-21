@@ -86,16 +86,15 @@ function App() {
         getContent();
     }, [loggedIn]);
 
-    function handleLoggedIn(token) {
+    function handleLoggedIn() {
         setLoggedIn(true);
-        console.log(token);
-        history('/signin')
-        localStorage.setItem('token',token);
+        history('/');
+        // localStorage.setItem('token',token);
     }
 
     function handleLoggedOut() {
-        localStorage.removeItem('token');
-        history('/signout');
+        // localStorage.removeItem('token');
+        history('/signin');
         setLoggedIn(false);
     }
 

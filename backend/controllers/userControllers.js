@@ -131,7 +131,11 @@ module.exports.logout = (req, res, next) => {
 
 module.exports.getCurrentUser = (req, res, next) => {
   console.log("getCurrentUser", req.user);
-  User.findById(req.user._id).then((user) => res.send({data: user}))
+  User.findById(req.user._id).then((user) => {
+    console.log(user);
+    res.send({data: user})
+    }
+  )
     .catch((err) => {
       if (err.name === "ValidationError") {
         next(new ValidationError("Невалидный id"));

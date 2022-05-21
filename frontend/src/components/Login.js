@@ -10,6 +10,7 @@ function Login({onLogin}) {
 
     function handleSubmit(e) {
         e.preventDefault();
+        console.log(email, password);
         onLogin(email,password)
     }
     function handleSetEmail(e){
@@ -20,6 +21,7 @@ function Login({onLogin}) {
         setPassword(e.target.value);
     }
 
+    console.log("Login.js");
 
     return (
         <div className="form__container">

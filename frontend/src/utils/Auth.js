@@ -25,10 +25,12 @@ class Auth {
     }
 
     authorize(email, password) {
+        console.log("authorize", this._url, email, password);
         return fetch(`${this._url}signin`, {
             method: 'POST',
             headers: this._headers,
-            body: JSON.stringify({password, email})
+            body: JSON.stringify({password, email}),
+            credentials: 'include',
         }).then((res) => {
             return res.json();
         }).then((res)=>{
@@ -50,5 +52,5 @@ class Auth {
     }
 }
 
-const auth = new Auth("https://auth.nomoreparties.co/", {"Content-Type": "application/json"});
+const auth = new Auth("https://api.mesto-julia.nomoredomains.xyz/", {"Content-Type": "application/json"});
 export default auth;

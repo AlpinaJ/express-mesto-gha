@@ -14,7 +14,8 @@ class Api {
 
     getUserInfo() {
         return fetch(`${this._url}/users/me`, {
-            headers: this._headers
+            headers: this._headers,
+            credentials: 'include',
         }).then((res) =>
             this._handleResponse(res)
         );
@@ -22,7 +23,8 @@ class Api {
 
     getInitialCards() {
         return fetch(`${this._url}/cards`, {
-            headers: this._headers
+            headers: this._headers,
+            credentials: 'include',
         }).then((res) => this._handleResponse(res));
     }
 
@@ -33,7 +35,8 @@ class Api {
             body: JSON.stringify({
                 name: input.name,
                 about: input.about
-            })
+            }),
+            credentials: 'include',
         }).then((res) => this._handleResponse(res));
     }
 
@@ -42,6 +45,7 @@ class Api {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({avatar: input}),
+            credentials: 'include',
         })
             .then((res) => this._handleResponse(res));
     }
@@ -53,14 +57,16 @@ class Api {
             body: JSON.stringify({
                 name: input.place,
                 link: input.link
-            })
+            }),
+            credentials: 'include',
         }).then((res) => this._handleResponse(res));
     }
 
     deleteCard(cardId) {
         return fetch(`${this._url}/cards/${cardId}`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: this._headers,
+            credentials: 'include',
         })
             .then((res) => this._handleResponse(res));
     }
@@ -68,7 +74,8 @@ class Api {
     changeLikeCardStatus(cardId, isLiked) {
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             method: isLiked ? 'PUT' : "DELETE",
-            headers: this._headers
+            headers: this._headers,
+            credentials: 'include',
         })
             .then((res) => this._handleResponse(res));
     }
@@ -95,15 +102,47 @@ class Api {
             headers: this._headers,
             body: JSON.stringify(
                 {avatar: avatar}),
+            credentials: 'include',
         })
             .then((res) => this._handleResponse(res));
     }
+
+    // signup({email, password}) {
+    //     return fetch(`${this._url}/signup`, {
+    //         method: 'POST',
+    //         headers: this._headers,
+    //         body: JSON.stringify({email, password}),
+    //         credentials: 'include',
+    //     })
+    //         .then((res) => this._handleResponse(res));
+    // }
+    //
+    // signin({email, password}) {
+    //     return fetch(`${this._url}/signin`, {
+    //         method: 'POST',
+    //         headers: this._headers,
+    //         body: JSON.stringify({email, password}),
+    //         credentials: 'include',
+    //     })
+    //         .then((res) => this._handleResponse(res));
+    // }
+    //
+    // signout() {
+    //     return fetch(`${this._url}/signout`, {
+    //         method: 'POST',
+    //         credentials: 'include',
+    //     })
+    //         .then((res) => this._handleResponse(res));
+    // }
+
+
 }
 
-const api = new Api('http://api.mesto-julia.nomoredomains.xyz',
+const api = new Api('https://api.mesto-julia.nomoredomains.xyz',
     {
-        authorization: 'ed992258-c9b2-4aaa-a5d2-85fccb4ac919',
+        // authorization: 'ed992258-c9b2-4aaa-a5d2-85fccb4ac919',
         'Content-Type': 'application/json'
     });
+
 
 export default api;

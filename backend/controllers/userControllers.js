@@ -98,6 +98,7 @@ module.exports.updateAvatar = (req, res, next) => {
 };
 
 module.exports.login = (req, res, next) => {
+  console.log("We are at login");
   const { email, password } = req.body;
   return User.findOne({ email }).select("+password")
     .then((user) => {

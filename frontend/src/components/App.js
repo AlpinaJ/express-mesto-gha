@@ -113,7 +113,7 @@ function App() {
     // }
 
     function handleRegister(email,password) {
-        return api.signup(email, password).then((res) => {
+        return api.signup({email, password}).then((res) => {
             if (res.data) {
                 setStatus(true);
                 setInfoTooltipOpen(true);

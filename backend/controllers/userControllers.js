@@ -6,6 +6,14 @@ const {ErrorNotFound} = require("../errors/ErrorNotFound");
 const {ValidationError} = require("../errors/ValidationError");
 const {UnauthorizedError} = require("../errors/UnauthorizedError");
 const {ConflictError} = require("../errors/ConflictError");
+const JWT_KEY = 'jwt';
+const JWT_OPTIONS = {
+  maxAge: 604800,
+  httpOnly: true,
+  secure: true,
+  sameSite: 'none',
+  domain: '.mesto-julia.nomoredomains.work',
+};
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -111,7 +119,7 @@ module.exports.login = (req, res, next) => {
         bcrypt.compare(password, user.password).then((result) => {
           if (result) {
             const token = jwt.sign({_id: user._id}, "some-secret-key", {expiresIn: "7d"});
-            res.cookie("jwt", token, {expiresIn: "7d", domain: '.mesto-julia.nomoredomains.work'});
+            res.cookie(JWT_KEY, token, JWT_OPTIONS);
             res.status(200).send({message: "success"});
           } else {
             next(new UnauthorizedError("Неправильные почта или пароль"));
@@ -126,7 +134,7 @@ module.exports.login = (req, res, next) => {
 
 module.exports.logout = (req, res, next) => {
   console.log("logout");
-  res.clearCookie("jwt", {expiresIn: "7d", domain: '.mesto-julia.nomoredomains.work'});
+  res.clearCookie(JWT_KEY, JWT_OPTIONS);
   res.end();
 }
 

@@ -122,6 +122,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res, next) =>{
+  console.log("logout");
   res.clearCookie("jwt", { expiresIn: "7d" });
   res.end();
 }

@@ -132,7 +132,7 @@ module.exports.login = (req, res, next) => {
     });
 };
 
-module.exports.logout = (req, res, next) => {
+module.exports.logout = (req, res) => {
   console.log("logout");
   res.clearCookie(JWT_KEY, JWT_OPTIONS);
   res.end();

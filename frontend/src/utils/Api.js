@@ -5,6 +5,7 @@ class Api {
     }
 
     _handleResponse(res) {
+        console.log(res);
         if (res.ok) {
             return res.json();
         } else {
@@ -17,6 +18,7 @@ class Api {
             headers: this._headers,
             credentials: 'include',
         }).then((res) => {
+                console.log(res);
                 this._handleResponse(res);
             }
         );

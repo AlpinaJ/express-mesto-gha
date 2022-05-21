@@ -86,8 +86,10 @@ function App() {
         getContent();
     }, [loggedIn]);
 
-    function handleLoggedIn() {
+    function handleLoggedIn(token) {
         setLoggedIn(true);
+        console.log(token);
+        localStorage.setItem('token',token);
     }
 
     function handleLoggedOut() {
@@ -98,6 +100,7 @@ function App() {
 
     function getContent() {
         const token = localStorage.getItem('token');
+        console.log(token);
         if (token) {
             auth.getMain(token).then((res) => {
                 setLoggedIn(true);
@@ -126,7 +129,8 @@ function App() {
     function handleLogin(email, password) {
         return auth.authorize(email, password).then((res)=>{
             if (res.token){
-                handleLoggedIn();
+                console.log(res.token);
+                handleLoggedIn(res.token);
             }
             else{
                 setStatus(false);

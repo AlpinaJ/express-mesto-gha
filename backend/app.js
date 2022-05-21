@@ -11,7 +11,7 @@ const cors = require('cors');
 const userRoutes = require("./routers/userRouter");
 const cardRoutes = require("./routers/cardRouter");
 const auth = require("./middlewares/auth");
-const {login, createUser} = require("./controllers/userControllers");
+const {login, createUser, logout} = require("./controllers/userControllers");
 const {errorHandler} = require("./middlewares/errorHandler");
 
 const {ErrorNotFound} = require("./errors/ErrorNotFound");
@@ -69,6 +69,7 @@ app.post("/signup", celebrate({
     avatar: Joi.string().pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/),
   }),
 }), createUser);
+app.post('/signout', logout);
 
 app.use(auth);
 app.use("/users", userRoutes);

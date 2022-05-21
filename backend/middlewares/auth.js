@@ -5,7 +5,7 @@ const { UnauthorizedError } = require("../errors/UnauthorizedError");
 module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
   let payload;
-  console.log("try to auth", req.url);
+  console.log("try to auth  This goose", req.url);
 
   try {
     payload = jwt.verify(token, "some-secret-key");

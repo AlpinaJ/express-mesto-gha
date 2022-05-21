@@ -16,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && scp -r ./build/* julia@51.250.110.172:/home/julia/express-mesto-gha/frontend/build"
   },
   "eslintConfig": {
     "extends": [

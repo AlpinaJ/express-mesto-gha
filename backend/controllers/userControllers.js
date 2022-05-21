@@ -102,6 +102,7 @@ module.exports.updateAvatar = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const {email, password} = req.body;
+  console.log("login with ", email);
   return User.findOne({email}).select("+password")
     .then((user) => {
       if (!user) {

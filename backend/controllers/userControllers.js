@@ -42,7 +42,6 @@ module.exports.createUser = (req, res, next) => {
     User.create({
       name, about, avatar, email, password: hash,
     }).then((user) => {
-      console.log("after creation of user", user);
       res.send({
         data: {
           email: user.email,
@@ -103,9 +102,10 @@ module.exports.updateAvatar = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const {email, password} = req.body;
+  console.log("begin login", email);
   return User.findOne({email}).select("+password")
     .then((user) => {
-      console.log("login", user);
+      console.log(user);
       if (!user) {
         next(new UnauthorizedError("Неправильные почта или пароль"));
       } else {

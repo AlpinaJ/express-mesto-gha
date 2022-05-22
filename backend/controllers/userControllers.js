@@ -12,7 +12,7 @@ const JWT_OPTIONS = {
   httpOnly: true,
   secure: true,
   sameSite: 'none',
-  expiresIn: '7d',
+  expires: '7d',
 };
 
 module.exports.getUsers = (req, res, next) => {

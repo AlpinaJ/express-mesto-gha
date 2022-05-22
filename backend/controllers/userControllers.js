@@ -138,7 +138,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie(JWT_KEY, JWT_OPTIONS);
+  res.clearCookie(JWT_KEY);
   res.end();
 }
 

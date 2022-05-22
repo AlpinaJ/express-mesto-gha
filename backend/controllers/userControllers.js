@@ -135,7 +135,7 @@ module.exports.login = (req, res, next) => {
               httpOnly: true,
               secure: true,
               sameSite: 'none',
-              expire: 720000 + Date.now()} );
+              expiresIn: 720000 + Date.now()} );
 
             res.status(200).send({message: "success"});
           } else {

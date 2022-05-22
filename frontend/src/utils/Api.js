@@ -5,23 +5,17 @@ class Api {
     }
 
     _handleResponse(res) {
-        console.log(res);
-        if (res.ok) {
-            return res.json();
-        } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
+        if (!res.ok) {
+            return Promise.reject(`Error while fetching data: ${res.status}`);
         }
+        return res.json();
     }
 
     getUserInfo() {
         return fetch(`${this._url}/users/me`, {
             headers: this._headers,
             credentials: 'include',
-        }).then((res) => {
-                console.log(res);
-                this._handleResponse(res);
-            }
-        );
+        }).then((res) =>{return this._handleResponse(res)});
     }
 
     getInitialCards() {
@@ -134,8 +128,8 @@ class Api {
         return fetch(`${this._url}/signout`, {
             method: 'POST',
             credentials: 'include',
-        })
-            .then((res) => this._handleResponse(res));
+        });
+            // .then((res) => this._handleResponse(res));
     }
 
 

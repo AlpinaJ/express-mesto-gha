@@ -82,10 +82,37 @@ function App() {
         })
     }
 
-    // useEffect(() => {
-    //     getContent();
-    // }, [loggedIn]);
+    useEffect(() => {
+        if (loggedIn) {
+            Promise.all([api.getUserInfo(), api.getInitialCards()])
+                .then(values => {
+                    if (values[0]["data"] !== undefined) {
+                        let newUser = values[0]["data"]
+                        let userInfo = {
+                            "avatar": newUser["avatar"] === undefined ? "" : newUser["avatar"],
+                            "about": newUser["about"] === undefined ? "" : newUser["about"],
+                            "email": newUser["email"] === undefined ? "" : newUser["email"],
+                            "name": newUser["name"] === undefined ? "" : newUser["name"]
+                        };
+                        setCurrentUser(userInfo);
+                    }
 
+
+                    let newCards = []
+                    setCards(newCards);
+                }).catch(err => {
+                console.error(err);
+            });
+        }
+    }, [loggedIn]);
+
+    useEffect(() => {
+        console.log(currentUser);
+        console.log(currentUser["data"]);
+        // console.log(currentUser.data);
+        // console.log(currentUser["data"].avatar);
+        // console.log(currentUser["data"]["avatar"]);
+    }, [currentUser]);
 
 
     function handleLoggedIn() {
@@ -95,9 +122,9 @@ function App() {
 
     function handleLoggedOut() {
         setLoggedIn(false);
-        api.signout().then(()=>{
+        api.signout().then(() => {
             history('/signin');
-        }).catch((err)=> console.log(err));
+        }).catch((err) => console.log(err));
     }
 
     // function getContent() {
@@ -112,14 +139,13 @@ function App() {
     //     }
     // }
 
-    function handleRegister(email,password) {
+    function handleRegister(email, password) {
         return api.signup({email, password}).then((res) => {
             if (res.data) {
                 setStatus(true);
                 setInfoTooltipOpen(true);
                 return res;
-            }
-            else{
+            } else {
                 setStatus(false);
                 setInfoTooltipOpen(true);
             }
@@ -131,39 +157,44 @@ function App() {
     }
 
     function handleLogin(email, password) {
-        return api.signin({email, password}).then((res)=>{
-            if (res['message']==='success'){
+        return api.signin({email, password}).then((res) => {
+            if (res['message'] === 'success') {
                 handleLoggedIn();
-            }
-            else{
+            } else {
                 setStatus(false);
                 setInfoTooltipOpen(true);
             }
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err);
         })
     }
 
-    function handleClose(){
+    function handleClose() {
         setInfoTooltipOpen(false);
-        if (status){
+        if (status) {
             history('/signin');
         }
     }
 
-    useEffect(() => {
-        console.log("another useEffect")
-        if (loggedIn) {
-            Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([user, c]) => {
-                console.log(user);
-                setCurrentUser(user);
-                setCards(c);
-                console.log(currentUser, user);
-            }).catch(err => {
-                console.log(err);
-            });
-        }
-    }, [loggedIn]);
+    // useEffect(() => {
+    //     console.log("another useEffect")
+    //     if (loggedIn) {
+    //         Promise.all([api.getUserInfo(), api.getInitialCards()])
+    //             .then(values => {
+    //             console.log("values", values);
+    //             console.log("value 0", values[0]["data"]);
+    //             console.log("value 1", values[1]);
+    //             console.log("value 11", values[1]);
+    //             setCurrentUser(values[0]);
+    //             console.log("kek");
+    //             setCards(values[1]);
+    //             console.log("currentUser", currentUser);
+    //         }).catch(err => {
+    //             console.error(err);
+    //             // console.log(err);
+    //         });
+    //     }
+    // }, [loggedIn]);
 
 
     useEffect(() => {
@@ -187,16 +218,16 @@ function App() {
                     <Route exact path="/" element=
                         {loggedIn ? <Navigate to="/signup"/> : <Navigate to="/signin"/>}
                     />
-                    {/*<Route path="/users/me" element={<ProtectedRoute isLoggedIn={loggedIn}><MainPage*/}
-                    {/*    currentUser={currentUser}*/}
-                    {/*    handleAddPlaceClick={handleAddPlaceClick}*/}
-                    {/*    handleCardClick={handleCardClick}*/}
-                    {/*    handleCardDelete={handleCardDelete}*/}
-                    {/*    handleCardLike={handleCardLike}*/}
-                    {/*    handleEditAvatarClick={handleEditAvatarClick}*/}
-                    {/*    handleEditProfileClick={handleEditProfileClick}*/}
-                    {/*    mainCards={cards}*/}
-                    {/*/></ProtectedRoute>}/>*/}
+                    <Route path="/users/me" element={<ProtectedRoute isLoggedIn={loggedIn}><MainPage
+                        currentUser={currentUser}
+                        handleAddPlaceClick={handleAddPlaceClick}
+                        handleCardClick={handleCardClick}
+                        handleCardDelete={handleCardDelete}
+                        handleCardLike={handleCardLike}
+                        handleEditAvatarClick={handleEditAvatarClick}
+                        handleEditProfileClick={handleEditProfileClick}
+                        mainCards={cards}
+                    /></ProtectedRoute>}/>
                 </Routes>
                 <Footer/>
                 <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}

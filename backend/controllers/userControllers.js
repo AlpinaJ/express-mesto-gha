@@ -9,11 +9,10 @@ const {ConflictError} = require("../errors/ConflictError");
 const JWT_KEY = 'jwt';
 const JWT_OPTIONS = {
   maxAge: 604800,
-  minAge: 604800,
   httpOnly: true,
   secure: true,
   sameSite: 'none',
-  expiresIn: '7d',
+  // expiresIn: '7d',
 };
 
 const { NODE_ENV, JWT_SECRET } = process.env;

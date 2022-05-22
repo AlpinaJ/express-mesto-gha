@@ -14,6 +14,15 @@ const JWT_OPTIONS = {
   sameSite: 'none',
 };
 
+const JWT_OPTIONS1 = {
+  maxAge: 604800000,
+  httpOnly: true,
+  secure: true,
+  sameSite: 'none',
+  expire: 720000 + Date.now()
+};
+
+
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
@@ -121,7 +130,8 @@ module.exports.login = (req, res, next) => {
               process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET
                 : 'some-secret-key',
               { expiresIn: '7d' });
-            res.cookie(JWT_KEY, token, JWT_OPTIONS);
+
+            res.cookie(JWT_KEY, token, JWT_OPTIONS1);
             res.status(200).send({message: "success"});
           } else {
             next(new UnauthorizedError("Неправильные почта или пароль"));

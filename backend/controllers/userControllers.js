@@ -42,6 +42,9 @@ module.exports.createUser = (req, res, next) => {
     name, about, avatar, email, password,
   } = req.body;
 
+  console.log("Create user with email",email,
+    "\npasswors",password, "\nname", name,
+    "\nabout", about, "\navatar", avatar);
   if (!validator.isEmail(email)) {
     next(new ValidationError("Переданы некорректные данные"));
   }
@@ -50,6 +53,7 @@ module.exports.createUser = (req, res, next) => {
     User.create({
       name, about, avatar, email, password: hash,
     }).then((user) => {
+      console.log("Send for creation", user);
       res.send({
         data: {
           email: user.email,
@@ -116,6 +120,7 @@ module.exports.login = (req, res, next) => {
       if (!user) {
         next(new UnauthorizedError("Неправильные почта или пароль"));
       } else {
+        console.log("Find user when login", user);
         bcrypt.compare(password, user.password).then((result) => {
           if (result) {
             const token = jwt.sign({_id: user._id}, "some-secret-key", {expiresIn: "7d"});
@@ -139,9 +144,9 @@ module.exports.logout = (req, res) => {
 }
 
 module.exports.getCurrentUser = (req, res, next) => {
-  console.log("getCurrentUser", req.user);
+  console.log("getCurrentUser with ", req.user, req.user._id);
   User.findById(req.user._id).then((user) => {
-    console.log(user);
+    console.log("Send current user", user);
     res.send({data: user})
     }
   )

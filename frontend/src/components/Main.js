@@ -5,7 +5,6 @@ import {CardsContext} from '../contexts/CardsContext.js';
 
 function Main({onEditProfile, onAddPlace, onEditAvatar,
                   onCardClick, onCardLike,onCardDelete, cards}) {
-    console.log("MAIN.js");
     let user = useContext(CurrentUserContext);
     // let cards = useContext(CardsContext);
     return (

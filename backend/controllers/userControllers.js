@@ -146,6 +146,7 @@ module.exports.logout = (req, res) => {
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id).then((user) => {
+    console.log("currentUser", req, user);
     res.send({data: user})
     }
   )

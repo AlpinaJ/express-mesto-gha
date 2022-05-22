@@ -131,7 +131,11 @@ module.exports.login = (req, res, next) => {
                 : 'some-secret-key',
               { expiresIn: '7d' });
 
-            res.cookie(JWT_KEY, token, JWT_OPTIONS1);
+            res.cookie(JWT_KEY, token,{  maxAge: 604800000,
+              httpOnly: true,
+              secure: true,
+              sameSite: 'none',
+              expire: 720000 + Date.now()} );
             res.status(200).send({message: "success"});
           } else {
             next(new UnauthorizedError("Неправильные почта или пароль"));

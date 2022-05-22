@@ -129,7 +129,6 @@ class Api {
             method: 'POST',
             credentials: 'include',
         });
-            // .then((res) => this._handleResponse(res));
     }
 
 

@@ -94,7 +94,9 @@ function App() {
     }
 
     useEffect(() => {
+        console.log("loggedIn changed");
         if (loggedIn) {
+            console.log("loggedIn true");
             Promise.all([api.getUserInfo(), api.getInitialCards()])
                 .then(values => {
 

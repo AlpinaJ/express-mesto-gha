@@ -109,7 +109,7 @@ class Api {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({email, password}),
-            credentials: 'include',
+            // credentials: 'include',
         })
             .then((res) => this._handleResponse(res));
     }
@@ -119,7 +119,7 @@ class Api {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({email, password}),
-            credentials: 'include',
+            // credentials: 'include',
         })
             .then((res) => this._handleResponse(res));
     }

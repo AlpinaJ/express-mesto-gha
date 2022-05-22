@@ -8,7 +8,7 @@ const {UnauthorizedError} = require("../errors/UnauthorizedError");
 const {ConflictError} = require("../errors/ConflictError");
 const JWT_KEY = 'jwt';
 const JWT_OPTIONS = {
-  maxAge: 10,
+  maxAge: 604800,
   httpOnly: true,
   secure: true,
   sameSite: 'none',

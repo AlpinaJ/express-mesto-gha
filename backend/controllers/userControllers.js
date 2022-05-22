@@ -123,7 +123,8 @@ module.exports.login = (req, res, next) => {
         console.log("Find user when login", user);
         bcrypt.compare(password, user.password).then((result) => {
           if (result) {
-            const token = jwt.sign({_id: user._id}, "some-secret-key", {expiresIn: "7d"});
+            const token = jwt.sign({_id: user._id}, "some-secret-key",  { expiresIn: '7d' });
+            console.log("token created in login", user._id, token);
             res.cookie(JWT_KEY, token, JWT_OPTIONS);
             res.status(200).send({message: "success"});
           } else {

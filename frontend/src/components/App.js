@@ -165,6 +165,8 @@ function App() {
                 setInfoTooltipOpen(true);
             }
         }).catch((err) => {
+            setStatus(false);
+            setInfoTooltipOpen(true);
             console.log(err);
         })
     }
@@ -211,7 +213,7 @@ function App() {
     return (
         <div className="App">
             <div className="page">
-                <Header email={email} handleSignOut={handleLoggedOut}/>
+                <Header email={currentUser.email} handleSignOut={handleLoggedOut}/>
                 <Routes>
                     <Route path="/signup" element={<Register onRegister={handleRegister}/>}/>
                     <Route path="/signin" element={<Login onLogin={handleLogin}/>}/>

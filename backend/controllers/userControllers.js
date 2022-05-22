@@ -12,7 +12,6 @@ const JWT_OPTIONS = {
   httpOnly: true,
   secure: true,
   sameSite: 'none',
-  path: '/',
 };
 
 module.exports.getUsers = (req, res, next) => {

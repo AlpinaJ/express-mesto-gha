@@ -43,9 +43,6 @@ module.exports.createUser = (req, res, next) => {
     name, about, avatar, email, password,
   } = req.body;
 
-  console.log("Create user with email",email,
-    "\npasswors",password, "\nname", name,
-    "\nabout", about, "\navatar", avatar);
   if (!validator.isEmail(email)) {
     next(new ValidationError("Переданы некорректные данные"));
   }
@@ -54,7 +51,6 @@ module.exports.createUser = (req, res, next) => {
     User.create({
       name, about, avatar, email, password: hash,
     }).then((user) => {
-      console.log("Send for creation", user);
       res.send({
         data: {
           email: user.email,
@@ -77,7 +73,6 @@ module.exports.createUser = (req, res, next) => {
 };
 
 module.exports.updateProfile = (req, res, next) => {
-  console.log("update profile");
   const {name, about} = req.body;
   User.findByIdAndUpdate(
     req.user._id,
@@ -115,20 +110,16 @@ module.exports.updateAvatar = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const {email, password} = req.body;
-  console.log("login with ", email);
   return User.findOne({email}).select("+password")
     .then((user) => {
       if (!user) {
         next(new UnauthorizedError("Неправильные почта или пароль"));
       } else {
-        console.log("Find user when login", user);
         bcrypt.compare(password, user.password).then((result) => {
           if (result) {
             const token = jwt.sign({_id: user._id},
               process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET
-                : 'some-secret-key',
-              { expiresIn: '7d' });
-            console.log("token created in login", user._id, token);
+                : 'some-secret-key');
             res.cookie(JWT_KEY, token, JWT_OPTIONS);
             res.status(200).send({message: "success"});
           } else {
@@ -143,15 +134,12 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  console.log("logout");
   res.clearCookie(JWT_KEY, JWT_OPTIONS);
   res.end();
 }
 
 module.exports.getCurrentUser = (req, res, next) => {
-  console.log("getCurrentUser with ", req.user, req.user._id);
   User.findById(req.user._id).then((user) => {
-    console.log("Send current user", user);
     res.send({data: user})
     }
   )

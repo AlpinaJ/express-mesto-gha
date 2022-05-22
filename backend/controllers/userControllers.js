@@ -8,10 +8,11 @@ const {UnauthorizedError} = require("../errors/UnauthorizedError");
 const {ConflictError} = require("../errors/ConflictError");
 const JWT_KEY = 'jwt';
 const JWT_OPTIONS = {
-  maxAge: 604800,
+  maxAge: 3600000,
   httpOnly: true,
   secure: true,
   sameSite: 'none',
+  expire:'7d',
 };
 
 module.exports.getUsers = (req, res, next) => {

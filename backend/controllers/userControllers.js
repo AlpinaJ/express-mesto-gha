@@ -12,7 +12,7 @@ const JWT_OPTIONS = {
   httpOnly: true,
   secure: true,
   sameSite: 'none',
-  domain: '.mesto-julia.nomoredomains.work',
+  // domain: '.mesto-julia.nomoredomains.work',
 };
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -131,6 +131,7 @@ module.exports.login = (req, res, next) => {
               { expiresIn: '7d' });
             console.log("token created in login", user._id, token);
             res.cookie(JWT_KEY, token, JWT_OPTIONS);
+            console.log(JWT_OPTIONS);
             res.status(200).send({message: "success"});
           } else {
             next(new UnauthorizedError("Неправильные почта или пароль"));

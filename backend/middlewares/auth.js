@@ -8,7 +8,8 @@ module.exports.auth= (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, "some-secret-key");
+    payload = jwt.verify(token, process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET
+      : 'some-secret-key');
   } catch (err) {
     next(new UnauthorizedError("Необходима авторизация"));
     console.log("error during auth");

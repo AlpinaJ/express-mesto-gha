@@ -12,7 +12,7 @@ const JWT_OPTIONS = {
   httpOnly: true,
   secure: true,
   sameSite: 'none',
-  expiresIn: '7d',
+  expiresIn: 100000,
 };
 
 module.exports.getUsers = (req, res, next) => {
@@ -123,9 +123,9 @@ module.exports.login = (req, res, next) => {
         console.log("Find user when login", user);
         bcrypt.compare(password, user.password).then((result) => {
           if (result) {
-            const token = jwt.sign({_id: user._id}, "some-secret-key",  { expiresIn: '7d' });
+            const token = jwt.sign({_id: user._id}, "some-secret-key",  { expiresIn: 10000 });
             console.log("token created in login", user._id, token);
-            res.cookie(JWT_KEY, token, { expiresIn: '7h' });
+            res.cookie(JWT_KEY, token, JWT_OPTIONS);
             res.status(200).send({message: "success"});
           } else {
             next(new UnauthorizedError("Неправильные почта или пароль"));

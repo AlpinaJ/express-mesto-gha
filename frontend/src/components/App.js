@@ -106,6 +106,8 @@ function App() {
                         let newCards = values[1]["data"]
                         setCards(newCards);
                     }
+
+                    history('/users/me');
                 }).catch(err => {
                 console.error(err);
             });
@@ -115,7 +117,7 @@ function App() {
 
     function handleLoggedIn() {
         setLoggedIn(true);
-        history('/users/me');
+        // history('/users/me');
     }
 
     function handleLoggedOut() {

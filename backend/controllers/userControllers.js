@@ -12,7 +12,6 @@ const JWT_OPTIONS = {
   httpOnly: true,
   secure: true,
   sameSite: 'none',
-  domain: '.mesto-julia.nomoredomains.work',
 };
 
 module.exports.getUsers = (req, res, next) => {

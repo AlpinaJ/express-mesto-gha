@@ -136,6 +136,7 @@ module.exports.login = (req, res, next) => {
               secure: true,
               sameSite: 'none',
               expire: 720000 + Date.now()} );
+
             res.status(200).send({message: "success"});
           } else {
             next(new UnauthorizedError("Неправильные почта или пароль"));

@@ -125,7 +125,7 @@ module.exports.login = (req, res, next) => {
           if (result) {
             const token = jwt.sign({_id: user._id}, "some-secret-key",  { expiresIn: '7d' });
             console.log("token created in login", user._id, token);
-            res.cookie(JWT_KEY, token, JWT_OPTIONS);
+            res.cookie(JWT_KEY, token, { expiresIn: '7d' });
             res.status(200).send({message: "success"});
           } else {
             next(new UnauthorizedError("Неправильные почта или пароль"));

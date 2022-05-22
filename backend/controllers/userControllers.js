@@ -8,11 +8,11 @@ const {UnauthorizedError} = require("../errors/UnauthorizedError");
 const {ConflictError} = require("../errors/ConflictError");
 const JWT_KEY = 'jwt';
 const JWT_OPTIONS = {
-  // maxAge: 3600000,
+  maxAge: 3600000,
   httpOnly: true,
   secure: true,
   sameSite: 'none',
-  expiresIn: 100000,
+  expiresIn: '7d',
 };
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -128,7 +128,7 @@ module.exports.login = (req, res, next) => {
             const token = jwt.sign({_id: user._id},
               process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET
                 : 'some-secret-key',
-              { expiresIn: 10000 });
+              { expiresIn: '7d' });
             console.log("token created in login", user._id, token);
             res.cookie(JWT_KEY, token, JWT_OPTIONS);
             res.status(200).send({message: "success"});

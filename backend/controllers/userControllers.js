@@ -8,11 +8,11 @@ const {UnauthorizedError} = require("../errors/UnauthorizedError");
 const {ConflictError} = require("../errors/ConflictError");
 const JWT_KEY = 'jwt';
 const JWT_OPTIONS = {
-  maxAge: 604800,
+  maxAge: 3600000,
   httpOnly: true,
   secure: true,
   sameSite: 'none',
-  // expiresIn: '7d',
+  domain: '.mesto-julia.nomoredomains.work',
 };
 
 const { NODE_ENV, JWT_SECRET } = process.env;

@@ -20,7 +20,12 @@ function App() {
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
     const [selectedCard, setSelectedCards] = useState({});
-    const [currentUser, setCurrentUser] = useState({});
+    const [currentUser, setCurrentUser] = useState({
+        "avatar": "",
+        "about": "",
+        "email": "",
+        "name": ""
+    });
     const [cards, setCards] = useState([]);
 
     const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
@@ -43,9 +48,11 @@ function App() {
     }
 
     function handleCardLike(card) {
-        const isLiked = card.likes.some(i => i._id === currentUser._id);
-        api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        const isLiked = card.likes.some(i => i === currentUser._id);
+        api.changeLikeCardStatus(card._id, !isLiked).then((res) => {
+            let newCard = res["data"];
+            let newCards = cards.map((c) => c._id === card._id ? newCard : c);
+            setCards(newCards);
         }).catch((err) => console.log(err));
     }
 
@@ -57,7 +64,7 @@ function App() {
 
     function handleUpdateUser(user) {
         api.patchUserInfo(user).then(res => {
-            setCurrentUser(res);
+            setCurrentUser(userFromRes(res));
             closeAllPopups();
         }).catch((err) => {
             console.log(err);
@@ -66,7 +73,7 @@ function App() {
 
     function handleUpdateAvatar(user) {
         api.setUserAvatar(user.avatar).then(res => {
-            setCurrentUser(res);
+            setCurrentUser(userFromRes(res));
             closeAllPopups();
         }).catch((err) => {
             console.log(err);
@@ -82,37 +89,26 @@ function App() {
         })
     }
 
+    function userFromRes(res) {
+        return res["data"] !== undefined ? res["data"] : currentUser;
+    }
+
     useEffect(() => {
         if (loggedIn) {
             Promise.all([api.getUserInfo(), api.getInitialCards()])
                 .then(values => {
-                    if (values[0]["data"] !== undefined) {
-                        let newUser = values[0]["data"]
-                        let userInfo = {
-                            "avatar": newUser["avatar"] === undefined ? "" : newUser["avatar"],
-                            "about": newUser["about"] === undefined ? "" : newUser["about"],
-                            "email": newUser["email"] === undefined ? "" : newUser["email"],
-                            "name": newUser["name"] === undefined ? "" : newUser["name"]
-                        };
-                        setCurrentUser(userInfo);
+
+                    setCurrentUser(userFromRes(values[0]));
+
+                    if (values[1]["data"] !== undefined) {
+                        let newCards = values[1]["data"]
+                        setCards(newCards);
                     }
-
-
-                    let newCards = []
-                    setCards(newCards);
                 }).catch(err => {
                 console.error(err);
             });
         }
     }, [loggedIn]);
-
-    useEffect(() => {
-        console.log(currentUser);
-        console.log(currentUser["data"]);
-        // console.log(currentUser.data);
-        // console.log(currentUser["data"].avatar);
-        // console.log(currentUser["data"]["avatar"]);
-    }, [currentUser]);
 
 
     function handleLoggedIn() {

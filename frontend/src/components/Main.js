@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
 import Card from "./Card.js";
 import {CurrentUserContext} from '../contexts/CurrentUserContext.js';
+import {CardsContext} from '../contexts/CardsContext.js';
 
-
-
-
-function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike,onCardDelete, cards}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar,
+                  onCardClick, onCardLike,onCardDelete, cards}) {
     console.log("MAIN.js");
     let user = useContext(CurrentUserContext);
+    // let cards = useContext(CardsContext);
     return (
         <main>
             <section className="profile">
@@ -29,11 +29,11 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike,
                 <button id="add-button" className="profile__add-button" type="button" onClick={onAddPlace}>
                 </button>
             </section>
-            {/*<section className="main">*/}
-            {/*    {*/}
-            {/*        cards.map((element) => (<Card card={element} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} key={element._id}/>))*/}
-            {/*    }*/}
-            {/*</section>*/}
+            <section className="main">
+                {
+                    cards.map((element) => (<Card card={element} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} key={element._id}/>))
+                }
+            </section>
         </main>
     )
 }

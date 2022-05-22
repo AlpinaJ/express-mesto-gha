@@ -7,10 +7,15 @@ import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
-function MainPage({currentUser, handleAddPlaceClick, handleCardClick, handleCardDelete, handleCardLike, handleEditAvatarClick, handleEditProfileClick, mainCards}) {
+function MainPage({
+                      currentUser, handleAddPlaceClick, handleCardClick, handleCardDelete,
+                      handleCardLike, handleEditAvatarClick, handleEditProfileClick,
+                      mainCards
+                  }) {
     return (
         <CurrentUserContext.Provider value={currentUser}>
-            <Main onEditProfile={handleEditProfileClick}
+            <Main
+                  onEditProfile={handleEditProfileClick}
                   onAddPlace={handleAddPlaceClick}
                   onEditAvatar={handleEditAvatarClick}
                   onCardClick={handleCardClick}

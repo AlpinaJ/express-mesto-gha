@@ -137,10 +137,10 @@ module.exports.login = (req, res, next) => {
     });
 };
 
-// module.exports.logout = (req, res) => {
-//   res.clearCookie(JWT_KEY, JWT_OPTIONS);
-//   res.end();
-// }
+module.exports.logout = (req, res) => {
+  res.clearCookie(JWT_KEY, JWT_OPTIONS);
+  res.end();
+}
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id).then((user) => {

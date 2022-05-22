@@ -112,9 +112,10 @@ module.exports.updateAvatar = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const {email, password} = req.body;
-  console.log(email);
+  console.log("email", email);
   return User.findOne({email}).select("+password")
     .then((user) => {
+      console.log("user while login", user);
       if (!user) {
         next(new UnauthorizedError("Неправильные почта или пароль"));
       } else {

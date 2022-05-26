@@ -125,17 +125,6 @@ function App() {
         }).catch((err) => console.log(err));
     }
 
-    // function getContent() {
-    //     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjg4YmUyMDk1M2I1ZjE4MGRhZWIwZWQiLCJpYXQiOjE2NTMxMjg3NDIsImV4cCI6MTY1MzczMzU0Mn0.v_yN5aeJ-AZqywPr-y67Y-Satqo0NCTh-BYcGdIbpLI";
-    //     console.log(token);
-    //     if (token) {
-    //         auth.getMain(token).then((res) => {
-    //             setLoggedIn(true);
-    //             history('/users/me');
-    //             setEmail(res.data.email);
-    //         })
-    //     }
-    // }
 
     function handleRegister(email, password) {
         return api.signup({email, password}).then((res) => {
@@ -155,6 +144,7 @@ function App() {
     }
 
     function handleLogin(email, password) {
+        tokenCheck();
         return api.signin({email, password}).then((res) => {
             if (res['message'] === 'success') {
                 handleLoggedIn();
@@ -176,25 +166,19 @@ function App() {
         }
     }
 
-    // useEffect(() => {
-    //     console.log("another useEffect")
-    //     if (loggedIn) {
-    //         Promise.all([api.getUserInfo(), api.getInitialCards()])
-    //             .then(values => {
-    //             console.log("values", values);
-    //             console.log("value 0", values[0]["data"]);
-    //             console.log("value 1", values[1]);
-    //             console.log("value 11", values[1]);
-    //             setCurrentUser(values[0]);
-    //             console.log("kek");
-    //             setCards(values[1]);
-    //             console.log("currentUser", currentUser);
-    //         }).catch(err => {
-    //             console.error(err);
-    //             // console.log(err);
-    //         });
-    //     }
-    // }, [loggedIn]);
+    function tokenCheck() {
+        console.log("we are in token check", loggedIn);
+        if (loggedIn) {
+            api.getUserInfo()
+                .then((res) => {
+                    setLoggedIn(true);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }
+
 
 
     useEffect(() => {
@@ -207,6 +191,10 @@ function App() {
         document.addEventListener('keydown', handleEscapeClose)
         return () => document.removeEventListener('keydown', handleEscapeClose)
     });
+
+    useEffect(()=>{
+        tokenCheck();
+    },[history]);
 
     return (
         <div className="App">

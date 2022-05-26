@@ -18,6 +18,8 @@ const JWT_OPTIONS = {
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
+
+
 module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send({data: users})).catch(next);
@@ -141,13 +143,14 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie(JWT_KEY, JWT_OPTIONS);
-  res.end();
+  // res.clearCookie(JWT_KEY, JWT_OPTIONS);
+  // res.end();
+  console.log("We try delete cookie");
 }
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id).then((user) => {
-    console.log("currentUser", req, user);
+    console.log("currentUser", req.user._id);
     res.send({data: user})
     }
   )

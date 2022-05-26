@@ -60,7 +60,7 @@ app.post("/signup", celebrate({
     avatar: Joi.string().pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/),
   }),
 }), createUser);
-// app.post('/signout', logout);
+app.post('/signout', logout);
 
 app.use(auth);
 app.use("/users", userRoutes);

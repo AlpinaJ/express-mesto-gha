@@ -143,9 +143,9 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
+  console.log("We try delete cookie");
   res.clearCookie(JWT_KEY, JWT_OPTIONS);
   res.end();
-  console.log("We try delete cookie");
 }
 
 module.exports.getCurrentUser = (req, res, next) => {

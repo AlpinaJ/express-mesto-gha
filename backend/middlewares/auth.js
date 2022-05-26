@@ -4,7 +4,6 @@ const { UnauthorizedError } = require("../errors/UnauthorizedError");
 
 module.exports.auth= (req, res, next) => {
   const token = req.cookies.jwt;
-  console.log(token);
   let payload;
 
   try {
@@ -12,7 +11,6 @@ module.exports.auth= (req, res, next) => {
       : 'some-secret-key');
   } catch (err) {
     next(new UnauthorizedError("Необходима авторизация"));
-    console.log("error during auth");
   }
 
   req.user = payload; // записываем пейлоуд в объект запроса

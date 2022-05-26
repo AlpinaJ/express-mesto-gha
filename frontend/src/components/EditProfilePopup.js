@@ -8,8 +8,10 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
     const currentUser = React.useContext(CurrentUserContext);
 
     useEffect(() => {
-        if(currentUser){setName(currentUser.name);
-            setDescription(currentUser.about);}
+        if (currentUser) {
+            setName(currentUser.name);
+            setDescription(currentUser.about);
+        }
     }, [currentUser, isOpen]);
 
     function handleSubmit(e) {
@@ -18,9 +20,11 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
 
         // Передаём значения управляемых компонентов во внешний обработчик
         onUpdateUser({
-            name:name,
+            name: name,
             about: description,
         });
+        setName("");
+        setDescription('');
     }
 
     function handleSetName(e) {
@@ -38,13 +42,15 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
         title={"Редактировать профиль"}
         children={<>
             <div className="popup__input-container">
-                <input onChange={handleSetName} type="text" className="popup__input popup__input_type_name" id="profile-name"
+                <input onChange={handleSetName} type="text" className="popup__input popup__input_type_name"
+                       id="profile-name"
                        name="name" required
                        minLength="2" maxLength="40" placeholder="Имя" value={name || ''}/>
                 <span id="profile-name-error" className="popup__error"></span>
             </div>
             <div className="popup__input-container">
-                <input onChange={handleSetDescription} type="text" className="popup__input popup__input_type_description"
+                <input onChange={handleSetDescription} type="text"
+                       className="popup__input popup__input_type_description"
                        id="profile-description"
                        name="description" required minLength="2" maxLength="200" placeholder="О себе"
                        value={description || ''}/>

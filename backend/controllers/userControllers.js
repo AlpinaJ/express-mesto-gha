@@ -114,10 +114,8 @@ module.exports.updateAvatar = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const {email, password} = req.body;
-  console.log("email", email);
   return User.findOne({email}).select("+password")
     .then((user) => {
-      console.log("user while login", user);
       if (!user) {
         next(new UnauthorizedError("Неправильные почта или пароль"));
       } else {
@@ -127,7 +125,6 @@ module.exports.login = (req, res, next) => {
               process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET
                 : 'some-secret-key',
               { expiresIn: '7d' });
-            console.log("token", token);
 
             res.cookie(JWT_KEY, token, JWT_OPTIONS);
             res.status(200).send({message: "success"});
@@ -143,14 +140,12 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  console.log("We try delete cookie");
   res.clearCookie(JWT_KEY, JWT_OPTIONS);
   res.end();
 }
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id).then((user) => {
-    console.log("currentUser", req.user._id);
     res.send({data: user})
     }
   )

@@ -92,9 +92,7 @@ function App() {
     }
 
     useEffect(() => {
-        console.log("loggedIn changed");
         if (loggedIn) {
-            console.log("loggedIn true");
             Promise.all([api.getUserInfo(), api.getInitialCards()])
                 .then(values => {
 
@@ -120,11 +118,9 @@ function App() {
 
     function handleLoggedOut() {
         setLoggedIn(false);
-        console.log("we are logout");
         api.signout().then(() => {
             history('/signin');
         }).catch((err) => console.log(err));
-        console.log("we are logout finished");
     }
 
 
@@ -169,7 +165,6 @@ function App() {
     }
 
     function tokenCheck() {
-        console.log("we are in token check");
         api.getUserInfo()
             .then((res) => {
                 setLoggedIn(true);

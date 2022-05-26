@@ -127,7 +127,7 @@ class Api {
     signout() {
         return fetch(`${this._url}/signout`, {
             method: 'POST',
-            // credentials: 'include',
+            credentials: 'include',
         });
     }
 

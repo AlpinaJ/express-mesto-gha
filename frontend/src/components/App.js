@@ -168,17 +168,14 @@ function App() {
 
     function tokenCheck() {
         console.log("we are in token check", loggedIn);
-        if (loggedIn) {
-            api.getUserInfo()
-                .then((res) => {
-                    setLoggedIn(true);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }
+        api.getUserInfo()
+            .then((res) => {
+                setLoggedIn(true);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
-
 
 
     useEffect(() => {
@@ -192,9 +189,9 @@ function App() {
         return () => document.removeEventListener('keydown', handleEscapeClose)
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         tokenCheck();
-    },[history]);
+    }, [history]);
 
     return (
         <div className="App">

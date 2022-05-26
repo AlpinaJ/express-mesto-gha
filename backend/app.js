@@ -73,7 +73,6 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-console.log(1);
 app.listen(PORT);
 
 // id "625aa56746411c03d82ddcdc"
